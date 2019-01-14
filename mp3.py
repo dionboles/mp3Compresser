@@ -19,6 +19,9 @@ for root, dirs, files in os.walk("."):
         if os.path.isfile(name) is True:
             if file_extension == ".mp3":
                 newName =str(os.path.splitext(name)[0]+"_compress");
-                os.system("ffmpeg -i "+name+"  -acodec libmp3lame -ac 2 -ab 64k -ar 44100  "+newName+".mp3");
-                shutil.copy2("./"+newName+".mp3","./mp3Compress/"+newName+".mp3")
-                os.remove(newName+".mp3");
+                if os.path.isfile("./mp3Compress/"+newName+".mp3") is False:
+                    os.system("ffmpeg -i "+name+"  -acodec libmp3lame -ac 2 -ab 64k -ar 44100  "+newName+".mp3");
+                    shutil.copy2("./"+newName+".mp3","./mp3Compress/"+newName+".mp3")
+                    os.remove(newName+".mp3");
+                else:
+                    print("File {} already compressed".format(name))
